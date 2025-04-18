@@ -1,0 +1,90 @@
+.dashboard-container {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 2rem;
+  padding: 2rem;
+  color: white;
+  background: linear-gradient(135deg, #2d2a4a, #1e1b38);
+  min-height: 100vh;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.left-panel {
+  background: #3f3a63;
+  padding: 1.5rem;
+  border-radius: 1rem;
+}
+
+.balance-box h2 {
+  font-size: 2rem;
+  margin-bottom: 0.2rem;
+}
+
+.currency-box {
+  margin-top: 2rem;
+}
+
+.currency-row {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.3rem 0;
+}
+
+.right-panel {
+  background: #2c274b;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.statistics-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dropdowns select {
+  margin-left: 1rem;
+  padding: 0.3rem;
+  background: #413c6a;
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.stats-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 2rem;
+  gap: 2rem;
+}
+
+.pie-chart {
+  background: #443e73;
+  height: 250px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats-table ul {
+  list-style: none;
+  padding: 0;
+}
+
+.stats-table li {
+  display: flex;
+  justify-content: space-between;
+  margin: 0.5rem 0;
+}
+
+.totals {
+  margin-top: 2rem;
+  border-top: 1px solid #666;
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
