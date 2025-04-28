@@ -1,0 +1,161 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Chart from "../../components/Chart/Chart";
+import StatisticsDashboard from "../../components/StatisticsDashboard/StatisticsDashboard";
+import StatisticsTable from "../../components/StatisticsTable/StatisticsTable";
+import {
+  fetchSummary,
+//  fetchCategories,
+} from "../../redux/transactions/operations";
+import {
+  selectSummary,
+//  selectCategories,
+  selectTotalIncome,
+  selectTotalExpenses,
+  selectBalance,
+ // selectSelectedMonth,
+ // selectSelectedYear,
+  selectIsLoading,
+  selectError
+} from "../../redux/transactions/selectors";
+
+
+import css from './StatisticsTab.module.css'
+
+const StatisticsTab = () => {
+   const dispatch = useDispatch();
+
+  const summary = useSelector(selectSummary);
+  //  const categories = useSelector(selectCategories);
+  const income = useSelector(selectTotalIncome);
+  const expenses = useSelector(selectTotalExpenses);
+  const balance = useSelector(selectBalance);
+  // const month = useSelector(selectSelectedMonth) ?? new Date().getMonth() + 1;
+  // const year = useSelector(selectSelectedYear) ?? new Date().getFullYear();
+  const loading = useSelector(selectIsLoading);
+  const error = useSelector(selectError);
+  const months = ['All month', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+  const now = new Date();
+    const currentMonthName = months[now.getMonth() + 1];
+    const currentYear = `${now.getFullYear()}`;
+
+    const [selectedMonth, setSelectedMonth] = useState(currentMonthName);
+    const [selectedYear, setSelectedYear] = useState(currentYear);
+
+    useEffect(() => {
+        fetchData(selectedMonth, selectedYear);
+    }, [selectedMonth, selectedYear]);
+
+    const fetchData = (monthName, year) => {
+        if (!monthName || !year) return;
+
+       // const yearNumber = Number(year);
+       // const monthIndex = months.indexOf(monthName);
+
+       // const period = monthName === 'All month' ? { year: yearNumber } : { month: monthIndex, year: yearNumber };
+
+       
+    };
+
+    const handleMonthChange = month => {
+        setSelectedMonth(month);
+    };
+
+    const handleYearChange = year => {
+        setSelectedYear(year);
+    };
+
+    if (loading) {
+        return <Loader />;
+    }
+
+    if (error) {
+        return (
+            <div className={css.statistics}>
+                <p className={css.error}>{error}</p>
+            </div>
+        );
+    }
+  
+
+    
+ 
+  return (
+    <div className={css.statisticsTab}>
+      <div className={css.chartSection}>
+        <h2 className={css.headerStat}>Statistics</h2>
+        <Chart summary={summary} balance={balance} />
+        <StatisticsDashboard selectedMonth={selectedMonth} selectedYear={selectedYear} onMonthChange={handleMonthChange} onYearChange={handleYearChange}/>
+      </div>
+
+      <div className={css.tableSection}>
+        <StatisticsTable
+          summary={summary}
+          //  categories={categories}
+          income={income}
+          expenses={expenses}
+        />
+      </div>
+    </div>
+
+  )
+
+
+
+};
+  //ПОТОМ УБРАТЬ
+//const StatisticsTab = () => {
+//  const dispatch = useDispatch();
+
+//  const summary = useSelector(selectSummary);
+ // const categories = useSelector(selectCategories);
+ // const income = useSelector(selectTotalIncome);
+//  const expenses = useSelector(selectTotalExpenses);
+//  const balance = useSelector(selectBalance);
+//  const month = useSelector(selectSelectedMonth);
+//  const year = useSelector(selectSelectedYear);
+ // const loading = useSelector(selectIsLoading);
+//  const error = useSelector(selectError);
+
+//  useEffect(() => {
+ //   if (month !== null && year !== null) {
+//      dispatch(fetchSummary({ month, year }));
+//      dispatch(fetchCategories({ month, year }));
+ //   }
+//  }, [dispatch, month, year]);
+
+//  if (loading) {
+//    return <div>Loading...</div>;
+ // }
+
+ // if (error) {
+ //   return <div>Error: {error.message || "Unknown error occurred"}</div>;
+ // }
+
+//  if (!summary || !categories) {
+ //   return <div>No data available</div>;
+//  }
+
+//  return (
+//    <div className={css.statisticsTab}>
+//      <div className={css.chartSection}>
+ //       <h2 className={css.headerStat}>Statistics</h2>
+//        <Chart summary={summary} categories={categories} balance={balance} />
+//        <StatisticsDashboard income={income} expenses={expenses} balance={balance} />
+//      </div>
+//
+//      <div className={css.tableSection}>
+//        <StatisticsTable
+//          summary={summary}
+//          categories={categories}
+//          income={income}
+//          expenses={expenses}
+//        />
+//      </div>
+//    </div>
+//  );
+//};
+
+
+export default StatisticsTab;
